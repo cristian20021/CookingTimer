@@ -1,3 +1,7 @@
+#TODO
+# Set timer fix the zeros
+# Connect the timers between themselves
+
 from tkinter import *  
 from tkinter import messagebox
 from PIL import ImageTk, Image
@@ -37,7 +41,7 @@ class Timer():
     def reset_timer(self):
         
         self.timer_label.config(text="00:00")
-        self.time_input.delete(0, END)
+        self.time_left = 0
 
     def start_timer(self):
         print(self.time_set_by_user)
@@ -70,7 +74,7 @@ class Timer():
 
 
     def updateTimer(self,time_to_update):
-        # self.timer_label = Label(B, text=f"00:{time_to_update}", font=("Helvetica", 48))
+        self.timer_label.config(text=f"{time_to_update}:00")
         self.time_set_by_user =  int(time_to_update )
         
 
