@@ -34,10 +34,14 @@ nr_of_timers.pack(pady=10)
 
 class Timer():
 
+    instances = []
+
     def __init__(self):
         self.time_set_by_user = 0
         self.timer_label = Label(B, text="00:00", font=("Helvetica", 48))
         self.time_left = 0
+        Timer.instances.append(self)
+
     def reset_timer(self):
         
         self.timer_label.config(text="00:00")
@@ -52,11 +56,16 @@ class Timer():
             messagebox.showerror("Invalid Input", "Please enter a valid number.")
 
     def display_timer(self):
-        time_input = Entry(B, font=("Helvetica", 14))
-        time_input.pack(pady=10)
+        spacing_header = Label(B, text = "--------------------------")
+        spacing_header.config(font =("Courier", 14))
+        spacing_header.pack()
 
         self.timer_label.pack()
-        
+
+        time_input = Entry(B, font=("Helvetica", 14))
+        # time_input.insert(0,'Input minutes')
+        time_input.pack(pady=10)
+
         setTimerButton = Button(B, text="Set Timer", font=("Helvetica", 14), command=lambda: self.updateTimer(time_input.get()))
         setTimerButton.pack( padx=20)
         
@@ -67,10 +76,6 @@ class Timer():
         reset_button = Button(B, text="Reset", font=("Helvetica", 14), command=self.reset_timer)
         reset_button.pack( padx=20)
 
-
-        spacing = Label(B, text = "--------------------------")
-        spacing.config(font =("Courier", 14))
-        spacing.pack()
 
 
     def updateTimer(self,time_to_update):
@@ -92,18 +97,26 @@ class Timer():
             B.after(1000, self.countdown)  
         else:
             messagebox.showinfo("Time's Up!", "The timer has finished.")
-
-    
+    @classmethod
+    def start_all_timers(cls):
+        for j in cls.instances:
+            j.start_timer()
 
 
 
 def proceed():
 
+
+
     for i in range(int(nr_of_timers.get())):
         timer = Timer()
         timer.display_timer()
-  
+    
+        
 
+    start_all_timers_button = Button(B, text="Start Together", font=("Helvetica", 14), command=Timer.start_all_timers)
+    start_all_timers_button.pack( padx=20)
+    
 
     # # global nr_of_timers 
     # for i in range(int(nr_of_timers.get())):
