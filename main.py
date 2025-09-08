@@ -1,6 +1,6 @@
 from tkinter import *  
 from tkinter import messagebox
-
+from PIL import ImageTk, Image
 
 B = Tk()
 B.title("Countdown Timer")
@@ -10,6 +10,12 @@ B.geometry("400x400")
 
 # Time variable
 time_left = 0
+
+# canv = Canvas(B, width=400, height=400, bg='white')
+# canv.grid(row=2, column=3)
+
+# img = ImageTk.PhotoImage(Image.open("background.jpeg"))  # PIL solution
+# canv.create_image(20, 20, anchor=NW, image=img)
 
 
 # Timer label
@@ -53,6 +59,12 @@ class Timer():
 
         reset_button = Button(B, text="Reset", font=("Helvetica", 14), command=self.reset_timer)
         reset_button.pack( padx=20)
+
+
+        spacing = Label(B, text = "--------------------------")
+        spacing.config(font =("Courier", 14))
+        spacing.pack()
+
 
     def countdown(self):
         global time_left
