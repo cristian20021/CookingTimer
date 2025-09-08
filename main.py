@@ -1,5 +1,5 @@
 #TODO
-# Set timer fix the zeros
+
 # Connect the timers between themselves
 
 from tkinter import *  
