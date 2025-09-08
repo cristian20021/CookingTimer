@@ -9,7 +9,7 @@ B.title("Countdown Timer")
 B.geometry("400x400")
 
 # Time variable
-time_left = 0
+
 
 # canv = Canvas(B, width=400, height=400, bg='white')
 # canv.grid(row=2, column=3)
@@ -33,25 +33,28 @@ class Timer():
     def __init__(self):
         self.time_set_by_user = 0
         self.timer_label = Label(B, text="00:00", font=("Helvetica", 48))
-     
+        self.time_left = 0
     def reset_timer(self):
-        global time_left
-        time_left = 0
+        
         self.timer_label.config(text="00:00")
         self.time_input.delete(0, END)
 
-    def start_timer(self,time_set_by_user):
-            
-        global time_left
+    def start_timer(self):
+        print(self.time_set_by_user)
         try:
-            time_left = int(time_set_by_user.get()) * 60  
+            self.time_left = self.time_set_by_user * 60  
             self.countdown()
         except ValueError:
             messagebox.showerror("Invalid Input", "Please enter a valid number.")
 
     def display_timer(self):
+        time_input = Entry(B, font=("Helvetica", 14))
+        time_input.pack(pady=10)
 
         self.timer_label.pack()
+        
+        setTimerButton = Button(B, text="Set Timer", font=("Helvetica", 14), command=lambda: self.updateTimer(time_input.get()))
+        setTimerButton.pack( padx=20)
         
 
         start_button = Button(B, text="Start", font=("Helvetica", 14), command=self.start_timer)
@@ -66,12 +69,17 @@ class Timer():
         spacing.pack()
 
 
+    def updateTimer(self,time_to_update):
+        # self.timer_label = Label(B, text=f"00:{time_to_update}", font=("Helvetica", 48))
+        self.time_set_by_user =  int(time_to_update )
+        
+
     def countdown(self):
-        global time_left
-        if time_left > 0:
-            mins, secs = divmod(time_left, 60)
+        print(type(self.time_left))
+        if self.time_left > 0:
+            mins, secs = divmod(self.time_left, 60)
             self.timer_label.config(text=f"{mins:02d}:{secs:02d}")
-            time_left -= 1
+            self.time_left -= 1
             B.after(1000, self.countdown)  
         else:
             messagebox.showinfo("Time's Up!", "The timer has finished.")
@@ -85,6 +93,7 @@ def proceed():
     for i in range(int(nr_of_timers.get())):
         timer = Timer()
         timer.display_timer()
+  
 
 
     # # global nr_of_timers 
