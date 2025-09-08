@@ -6,25 +6,33 @@ B = Tk()
 B.title("Countdown Timer")
 
 # Set window size
-B.geometry("300x200")
+B.geometry("400x400")
 
 # Time variable
 time_left = 0
 
+def proceed():
+    pass
+
 # Timer label
 
-#nr_of_timers = input("How many timers would you like to add?")
-
-label = Label(B, text = "Fact of the Day")
+label = Label(B, text = "How many timers would you like to set?")
 label.config(font =("Courier", 14))
 label.pack()
 
-timer_label = Label(B, text="00:00", font=("Helvetica", 48))
-timer_label.pack()
+# Number of timers input
+nr_of_timers = Entry(B, font=("Helvetica", 14))
+nr_of_timers.pack(pady=10)
 
-# Time input entry
-time_input = Entry(B, font=("Helvetica", 14))
-time_input.pack(pady=10)
+start_button = Button(B, text="Proceed", font=("Helvetica", 14), command=proceed)
+start_button.pack(padx=20)
+
+# timer_label = Label(B, text="00:00", font=("Helvetica", 48))
+# timer_label.pack()
+
+# # Time input entry
+# time_input = Entry(B, font=("Helvetica", 14))
+# time_input.pack(pady=10)
 
 def start_timer():
     global time_left
@@ -51,10 +59,10 @@ def reset_timer():
     time_input.delete(0, END)
 
 
-start_button = Button(B, text="Start", font=("Helvetica", 14), command=start_timer)
-start_button.pack(side="left", padx=20)
+# start_button = Button(B, text="Start", font=("Helvetica", 14), command=start_timer)
+# start_button.pack(side="left", padx=20)
 
-reset_button = Button(B, text="Reset", font=("Helvetica", 14), command=reset_timer)
-reset_button.pack(side="right", padx=20)
+# reset_button = Button(B, text="Reset", font=("Helvetica", 14), command=reset_timer)
+# reset_button.pack(side="right", padx=20)
 
 B.mainloop()
