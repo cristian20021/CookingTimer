@@ -74,7 +74,12 @@ class Timer():
 
 
     def updateTimer(self,time_to_update):
-        self.timer_label.config(text=f"{time_to_update}:00")
+        if int(time_to_update)>9:
+            self.timer_label.config(text=f"{time_to_update}:00")
+            
+        else:
+            self.timer_label.config(text=f"0{time_to_update}:00")
+
         self.time_set_by_user =  int(time_to_update )
         
 
