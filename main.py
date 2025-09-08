@@ -12,6 +12,13 @@ B.geometry("300x200")
 time_left = 0
 
 # Timer label
+
+#nr_of_timers = input("How many timers would you like to add?")
+
+label = Label(B, text = "Fact of the Day")
+label.config(font =("Courier", 14))
+label.pack()
+
 timer_label = Label(B, text="00:00", font=("Helvetica", 48))
 timer_label.pack()
 
