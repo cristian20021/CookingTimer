@@ -11,8 +11,7 @@ B.geometry("400x400")
 # Time variable
 time_left = 0
 
-def proceed():
-    pass
+
 
 # Timer label
 
@@ -24,15 +23,21 @@ label.pack()
 nr_of_timers = Entry(B, font=("Helvetica", 14))
 nr_of_timers.pack(pady=10)
 
-start_button = Button(B, text="Proceed", font=("Helvetica", 14), command=proceed)
-start_button.pack(padx=20)
 
-# timer_label = Label(B, text="00:00", font=("Helvetica", 48))
-# timer_label.pack()
 
-# # Time input entry
-# time_input = Entry(B, font=("Helvetica", 14))
-# time_input.pack(pady=10)
+def proceed():
+    # global nr_of_timers 
+    for i in range(int(nr_of_timers.get())):
+        timer_label = Label(B, text="00:00", font=("Helvetica", 48))
+        timer_label.pack()
+
+        # Time input entry
+        time_input = Entry(B, font=("Helvetica", 14))
+        time_input.pack(pady=10)
+  
+
+        reset_button = Button(B, text="Reset", font=("Helvetica", 14), command=reset_timer)
+        reset_button.pack(side="right", padx=20)
 
 def start_timer():
     global time_left
@@ -58,7 +63,8 @@ def reset_timer():
     timer_label.config(text="00:00")
     time_input.delete(0, END)
 
-
+list_timers = Button(B, text="Proceed", font=("Helvetica", 14), command=proceed)
+list_timers.pack(padx=20)
 # start_button = Button(B, text="Start", font=("Helvetica", 14), command=start_timer)
 # start_button.pack(side="left", padx=20)
 
