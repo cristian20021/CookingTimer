@@ -2,6 +2,9 @@
 
 # Connect the timers between themselves
 
+
+
+import pygame
 from tkinter import *  
 from tkinter import messagebox
 from PIL import ImageTk, Image
@@ -9,20 +12,12 @@ from PIL import ImageTk, Image
 B = Tk()
 B.title("Countdown Timer")
 
-# Set window size
+
 B.geometry("400x400")
 
-# Time variable
+pygame.mixer.init()
+pygame.mixer.music.load("soft_wake_up.mp3")
 
-
-# canv = Canvas(B, width=400, height=400, bg='white')
-# canv.grid(row=2, column=3)
-
-# img = ImageTk.PhotoImage(Image.open("background.jpeg"))  # PIL solution
-# canv.create_image(20, 20, anchor=NW, image=img)
-
-
-# Timer label
 
 label = Label(B, text = "How many timers would you like to set?")
 label.config(font =("Courier", 14))
@@ -96,7 +91,10 @@ class Timer():
             self.time_left -= 1
             B.after(1000, self.countdown)  
         else:
-            messagebox.showinfo("Time's Up!", "The timer has finished.")
+            #messagebox.showinfo("Time's Up!", "The timer has finished.")
+            pygame.mixer.music.play()
+
+
     @classmethod
     def start_all_timers(cls):
         for j in cls.instances:
@@ -118,20 +116,6 @@ def proceed():
     start_all_timers_button.pack( padx=20)
     
 
-    # # global nr_of_timers 
-    # for i in range(int(nr_of_timers.get())):
-    #     timer_label = Label(B, text="00:00", font=("Helvetica", 48))
-    #     timer_label.pack()
-
-    #     # Time input entry
-    #     time_input = Entry(B, font=("Helvetica", 14))
-    #     time_input.pack(pady=10)
-  
-    #     start_button = Button(B, text="Start", font=("Helvetica", 14), command=start_timer)
-    #     start_button.pack( padx=20)
-
-    #     reset_button = Button(B, text="Reset", font=("Helvetica", 14), command=reset_timer)
-    #     reset_button.pack( padx=20)
 
 
 
