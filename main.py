@@ -3,7 +3,7 @@
 # Connect the timers between themselves
 
 
-
+import time
 import pygame
 from tkinter import *  
 from tkinter import messagebox
@@ -36,13 +36,19 @@ class Timer():
         self.timer_label = Label(B, text="00:00", font=("Helvetica", 48))
         self.time_left = 0
         Timer.instances.append(self)
+        self.Status = False # reseted or not
 
     def reset_timer(self):
-        
+        pygame.mixer.music.stop()
+        self.timer_label.config(text="00:00",fg='black')
         self.timer_label.config(text="00:00")
+        self.Status = True
         self.time_left = 0
+        
 
     def start_timer(self):
+        self.Status = False
+        
         print(self.time_set_by_user)
         try:
             self.time_left = self.time_set_by_user * 60  
@@ -74,6 +80,7 @@ class Timer():
 
 
     def updateTimer(self,time_to_update):
+        self.timer_label.config(text="00:00",fg='black')
         if int(time_to_update)>9:
             self.timer_label.config(text=f"{time_to_update}:00")
             
@@ -91,8 +98,14 @@ class Timer():
             self.time_left -= 1
             B.after(1000, self.countdown)  
         else:
+            if self.Status != True:
+                pygame.mixer.music.play()
             #messagebox.showinfo("Time's Up!", "The timer has finished.")
-            pygame.mixer.music.play()
+            self.timer_label.config(text="00:00",fg='red')
+            
+            
+   
+       
 
 
     @classmethod
