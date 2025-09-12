@@ -37,8 +37,8 @@ class Timer():
         self.time_left = 0
         Timer.instances.append(self)
         self.Status = False # reseted or not
-        self.Paused = False
-        self.Started = False
+        self.Paused = False # has it been paused or not for resuming or starting
+        self.Started = False # has it started for multiple timer set ups
     def reset_timer(self):
         pygame.mixer.music.stop()
         self.timer_label.config(text="00:00",fg='black')
@@ -123,6 +123,9 @@ class Timer():
                     pygame.mixer.music.play()
                 #messagebox.showinfo("Time's Up!", "The timer has finished.")
                 self.timer_label.config(text="00:00",fg='red')
+                self.Started = False
+                print(f'Status:{self.Status}, Pause:{self.Paused}, Started:{self.Started}')
+                
       
             
    
