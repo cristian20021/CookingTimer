@@ -37,22 +37,34 @@ class Timer():
         self.time_left = 0
         Timer.instances.append(self)
         self.Status = False # reseted or not
-
+        self.Paused = False
+        self.Started = False
     def reset_timer(self):
         pygame.mixer.music.stop()
         self.timer_label.config(text="00:00",fg='black')
         self.timer_label.config(text="00:00")
         self.Status = True
         self.time_left = 0
+
         
+    def pause_timer(self):
+        self.Paused = True
+        self.countdown()
+
 
     def start_timer(self):
+        if self.Paused == True:
+            self.Paused = False
         self.Status = False
-        
+   
         print(self.time_set_by_user)
         try:
-            self.time_left = self.time_set_by_user * 60  
-            self.countdown()
+                if self.Started == False:
+                    self.time_left = self.time_set_by_user * 60  
+                    self.countdown()
+                    self.Started = True
+                else:
+                    self.countdown()
         except ValueError:
             messagebox.showerror("Invalid Input", "Please enter a valid number.")
 
@@ -70,8 +82,12 @@ class Timer():
         setTimerButton = Button(B, text="Set Timer", font=("Helvetica", 14), command=lambda: self.updateTimer(time_input.get()))
         setTimerButton.pack( padx=20)
         
+        
 
         start_button = Button(B, text="Start", font=("Helvetica", 14), command=self.start_timer)
+        start_button.pack( padx=20)
+
+        start_button = Button(B, text="Pause", font=("Helvetica", 14), command=self.pause_timer)
         start_button.pack( padx=20)
 
         reset_button = Button(B, text="Reset", font=("Helvetica", 14), command=self.reset_timer)
@@ -91,18 +107,23 @@ class Timer():
         
 
     def countdown(self):
-        print(type(self.time_left))
-        if self.time_left > 0:
-            mins, secs = divmod(self.time_left, 60)
-            self.timer_label.config(text=f"{mins:02d}:{secs:02d}")
-            self.time_left -= 1
-            B.after(1000, self.countdown)  
-        else:
-            if self.Status != True:
-                pygame.mixer.music.play()
-            #messagebox.showinfo("Time's Up!", "The timer has finished.")
-            self.timer_label.config(text="00:00",fg='red')
+        
+            print(self.time_left)
             
+            if self.time_left > 0 and self.Paused == False:
+                mins, secs = divmod(self.time_left, 60)
+                self.timer_label.config(text=f"{mins:02d}:{secs:02d}")
+                self.time_left -= 1
+                B.after(1000, self.countdown)  
+            elif self.Paused == True:
+                mins, secs = divmod(self.time_left, 60)
+                self.timer_label.config(text=f"{mins:02d}:{secs:02d}")
+            else:
+                if self.Status != True:
+                    pygame.mixer.music.play()
+                #messagebox.showinfo("Time's Up!", "The timer has finished.")
+                self.timer_label.config(text="00:00",fg='red')
+      
             
    
        
